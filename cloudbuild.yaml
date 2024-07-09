@@ -18,3 +18,6 @@ steps:
 images:
   - 'northamerica-northeast1-docker.pkg.dev/csci5409-428822/csci5409k8app1/k8img1:$SHORT_SHA'
   - 'northamerica-northeast1-docker.pkg.dev/csci5409-428822/csci5409k8app2/k8img2:$SHORT_SHA'
+
+options:
+  default_logs_bucket_behavior: REGIONAL_USER_OWNED_BUCKET
