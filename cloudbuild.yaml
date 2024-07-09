@@ -15,7 +15,16 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'northamerica-northeast1-docker.pkg.dev/csci5409-428822/csci5409k8app2/k8img2:$SHORT_SHA']
 
-# Deploy Containers to K8s cluster
+  # Fetch Kubernetes cluster credentials
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'container'
+      - 'clusters'
+      - 'get-credentials'
+      - '<your-cluster-name>'
+      - '--region=<your-cluster-region>'
+  
+  # Deploy to Kubernetes cluster
   - name: 'gcr.io/cloud-builders/kubectl'
     args:
       - 'apply'
