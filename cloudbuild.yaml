@@ -21,7 +21,7 @@ steps:
       - 'container'
       - 'clusters'
       - 'get-credentials'
-      - 'csci-5409-k8-assignment-cluster'
+      - 'csci5409-k8-assignment-cluster'
       - '--region=us-central1-c'
   
   # Deploy to Kubernetes cluster
