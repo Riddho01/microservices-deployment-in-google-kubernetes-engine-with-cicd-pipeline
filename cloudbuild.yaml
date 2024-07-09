@@ -22,7 +22,6 @@ steps:
       - 'clusters'
       - 'get-credentials'
       - '<your-cluster-name>'
-      - '--region=<your-cluster-region>'
   
   # Deploy to Kubernetes cluster
   - name: 'gcr.io/cloud-builders/kubectl'
