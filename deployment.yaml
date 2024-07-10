@@ -74,7 +74,7 @@ spec:
       volumes:
       - name: storage
         persistentVolumeClaim:
-          claimName: app1-pvc
+          claimName: app1-pvc  # Ensure this is correct or adjust as needed
 ---
 apiVersion: v1
 kind: Service
