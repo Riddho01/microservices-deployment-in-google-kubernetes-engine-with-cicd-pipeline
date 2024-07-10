@@ -38,7 +38,7 @@ spec:
     spec:
       containers:
       - name: app1
-        image: northamerica-northeast1-docker.pkg.dev/csci5409-428822/csci5409k8app1/k8img1:latest
+        image: northamerica-northeast1-docker.pkg.dev/csci5409-428822/csci5409k8app1/k8img1:${SHORT_SHA}
         ports:
         - containerPort: 6000
         volumeMounts:
@@ -65,7 +65,7 @@ spec:
     spec:
       containers:
       - name: app2
-        image: northamerica-northeast1-docker.pkg.dev/csci5409-428822/csci5409k8app2/k8img2:latest
+        image: northamerica-northeast1-docker.pkg.dev/csci5409-428822/csci5409k8app2/k8img2:${SHORT_SHA}
         ports:
         - containerPort: 7200
         volumeMounts:
