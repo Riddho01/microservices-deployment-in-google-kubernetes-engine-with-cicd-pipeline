@@ -4,7 +4,7 @@ metadata:
   name: app1-pv
 spec:
   capacity:
-    storage: 1Gi
+    storage: 10Gi
   accessModes:
     - ReadWriteOnce
   gcePersistentDisk:
@@ -20,7 +20,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
+      storage: 10Gi
 ---
 apiVersion: apps/v1
 kind: Deployment
