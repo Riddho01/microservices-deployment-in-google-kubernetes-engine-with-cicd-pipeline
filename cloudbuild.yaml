@@ -26,10 +26,10 @@ steps:
       - 'clusters'
       - 'get-credentials'
       - 'csci5409-k8-assignment-cluster'
-      - '--region=us-central1'
+      - '--region=us-east1-c'
     env:
       - 'CLOUDSDK_CONTAINER_CLUSTER=csci5409-k8-assignment-cluster'
-      - 'CLOUDSDK_COMPUTE_REGION=us-central1'
+      - 'CLOUDSDK_COMPUTE_REGION=us-east1-c'
 
   # Deploy to Kubernetes cluster
   - name: 'gcr.io/cloud-builders/kubectl'
@@ -39,6 +39,6 @@ steps:
       - 'deployment.yaml'
     env:
       - 'CLOUDSDK_CONTAINER_CLUSTER=csci5409-k8-assignment-cluster'
-      - 'CLOUDSDK_COMPUTE_REGION=us-central1'
+      - 'CLOUDSDK_COMPUTE_REGION=us-east1-c
 options:
   default_logs_bucket_behavior: REGIONAL_USER_OWNED_BUCKET
