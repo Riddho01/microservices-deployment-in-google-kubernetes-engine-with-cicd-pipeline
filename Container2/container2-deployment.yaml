@@ -1,0 +1,40 @@
+#Deploy container 2 image from artifact registry in a pod
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app2-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app2
+  template:
+    metadata:
+      labels:
+        app: app2
+    spec:
+      containers:
+      - name: app2
+        image: northamerica-northeast1-docker.pkg.dev/csci5409-428822/csci5409k8app2/k8img2:latest
+        ports:
+        - containerPort: 7200
+        volumeMounts:
+        - mountPath: /usr/src/app/data
+          name: persistent-vol
+      volumes:
+      - name: persistent-vol               #Mount the claimed persistent volume
+        persistentVolumeClaim:
+          claimName: app-pvc
+---
+#Attach a cluster IP port for internal communication
+apiVersion: v1
+kind: Service
+metadata:
+  name: app2
+spec:
+  selector:
+    app: app2
+  ports:
+  - protocol: TCP
+    port: 7200
+    type: ClusterIP
