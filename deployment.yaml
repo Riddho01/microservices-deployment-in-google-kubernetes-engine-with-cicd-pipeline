@@ -6,7 +6,7 @@ spec:
   capacity:
     storage: 1Gi
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   gcePersistentDisk:
     pdName: k8assignment-cluster-disk
     fsType: ext4
@@ -17,7 +17,7 @@ metadata:
   name: app1-pvc
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
       storage: 1Gi
