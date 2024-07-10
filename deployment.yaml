@@ -5,7 +5,7 @@ metadata:
   name: app-pv
 spec:
   capacity:
-    storage: 1Gi
+    storage: 10Gi
   storageClassName: standard
   accessModes:
     - ReadWriteOnce
@@ -23,4 +23,4 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
+      storage: 10Gi
