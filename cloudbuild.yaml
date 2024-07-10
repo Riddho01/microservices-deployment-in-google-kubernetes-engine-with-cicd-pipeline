@@ -19,7 +19,7 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'northamerica-northeast1-docker.pkg.dev/csci5409-428822/csci5409k8app2/k8img2']
 
-  # Fetch Kubernetes cluster credentials
+    # Fetch Kubernetes cluster credentials
   - name: 'gcr.io/cloud-builders/gcloud'
     args:
       - 'container'
@@ -27,11 +27,18 @@ steps:
       - 'get-credentials'
       - 'csci5409-k8-assignment-cluster'
       - '--region=us-central1'
+    env:
+      - 'CLOUDSDK_CONTAINER_CLUSTER=csci5409-k8-assignment-cluster'
+      - 'CLOUDSDK_COMPUTE_REGION=us-central1'
+
   # Deploy to Kubernetes cluster
   - name: 'gcr.io/cloud-builders/kubectl'
     args:
       - 'apply'
       - '-f'
       - 'deployment.yaml'
+    env:
+      - 'CLOUDSDK_CONTAINER_CLUSTER=csci5409-k8-assignment-cluster'
+      - 'CLOUDSDK_COMPUTE_REGION=us-central1'
 options:
   default_logs_bucket_behavior: REGIONAL_USER_OWNED_BUCKET
