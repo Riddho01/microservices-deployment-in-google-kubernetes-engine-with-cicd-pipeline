@@ -9,7 +9,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   gcePersistentDisk:
-    pdName: gke-csci5409-k8-assignme-default-pool-081be150-ll80
+    pdName: k8-assignment-cluster-disk
     fsType: ext4
 ---
 #Claim the pesistent volume 
