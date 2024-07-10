@@ -22,7 +22,7 @@ steps:
       - 'clusters'
       - 'get-credentials'
       - 'csci5409-k8-assignment-cluster'
-      - '--region=us-central1-c'
+      - '--region=us-central1'
   
     # Fetch Kubernetes cluster credentials
   - name: 'gcr.io/cloud-builders/gcloud'
@@ -31,10 +31,10 @@ steps:
       - 'clusters'
       - 'get-credentials'
       - 'csci5409-k8-assignment-cluster'
-      - '--region=us-central1-c'
+      - '--region=us-central1'
     env:
       - 'CLOUDSDK_CONTAINER_CLUSTER=csci5409-k8-assignment-cluster'
-      - 'CLOUDSDK_COMPUTE_REGION=us-central1-c'
+      - 'CLOUDSDK_COMPUTE_REGION=us-central1'
 
   # Deploy to Kubernetes cluster
   - name: 'gcr.io/cloud-builders/kubectl'
@@ -44,7 +44,7 @@ steps:
       - 'deployment.yaml'
     env:
       - 'CLOUDSDK_CONTAINER_CLUSTER=csci5409-k8-assignment-cluster'
-      - 'CLOUDSDK_COMPUTE_REGION=us-central1-c'
+      - 'CLOUDSDK_COMPUTE_REGION=us-central1'
 
 images:
   - 'northamerica-northeast1-docker.pkg.dev/csci5409-428822/csci5409k8app1/k8img1:$SHORT_SHA'
