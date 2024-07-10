@@ -1,17 +1,11 @@
+substitutions:
+   PROJECT_ID: "csci5409-428822"
+   REGION: "us-east1-c"
+   IMAGE1: "northamerica-northeast1-docker.pkg.dev/$_PROJECT_ID/csci5409k8app1/k8img1"
+   IMAGE2: "northamerica-northeast1-docker.pkg.dev/$_PROJECT_ID/csci5409k8app2/k8img2"
+   GKE_CLUSTER_NAME: "csci5409-k8-assignment-cluster"
+
 steps:
-
-  # Read properties file into environment variables
-  - name: 'gcr.io/cloud-builders/gcloud'
-    entrypoint: 'bash'
-    args:
-      - '-c'
-      - |
-        set -o allexport
-        source build.properties
-        set +o allexport
-    env:
-      - 'CLOUDSDK_CORE_DISABLE_PROMPTS=1'
-
   # Build Container 2 image
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', '${IMAGE1}', './Container1']
