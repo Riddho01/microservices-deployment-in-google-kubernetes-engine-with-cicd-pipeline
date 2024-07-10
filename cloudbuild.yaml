@@ -1,25 +1,25 @@
 substitutions:
   _REGION: "us-east1-c"
-  _IMAGE1_NAME: "northamerica-northeast1-docker.pkg.dev/csci5409-428822/csci5409k8app1/k8img1"
-  _IMAGE2_NAME: "northamerica-northeast1-docker.pkg.dev/csci5409-428822/csci5409k8app2/k8img2"
+  _IMAGE1: "northamerica-northeast1-docker.pkg.dev/csci5409-428822/csci5409k8app1/k8img1"
+  _IMAGE2: "northamerica-northeast1-docker.pkg.dev/csci5409-428822/csci5409k8app2/k8img2"
   _GKE_CLUSTER_NAME: "csci5409-k8-assignment-cluster"
 
 steps:
   # Build Container 1 image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', '$_IMAGE1_NAME', './Container1']
+    args: ['build', '-t', '$_IMAGE1', './Container1']
 
   # Push Container 1 image to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', '$_IMAGE1_NAME']
+    args: ['push', '$_IMAGE1']
   
   # Build Container 2 image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', '$_IMAGE2_NAME', './Container2']
+    args: ['build', '-t', '$_IMAGE2', './Container2']
   
   # Push Container 2 image to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', '$_IMAGE2_NAME']
+    args: ['push', '$_IMAGE2']
 
   # Fetch Kubernetes cluster credentials
   - name: 'gcr.io/cloud-builders/gcloud'
