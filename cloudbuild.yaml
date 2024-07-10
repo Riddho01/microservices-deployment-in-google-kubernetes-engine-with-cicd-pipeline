@@ -1,19 +1,32 @@
 steps:
+
+  # Read properties file into environment variables
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        set -o allexport
+        source build.properties
+        set +o allexport
+    env:
+      - 'CLOUDSDK_CORE_DISABLE_PROMPTS=1'
+
   # Build Container 2 image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'northamerica-northeast1-docker.pkg.dev/csci5409-428822/csci5409k8app1/k8img1', './Container1']
+    args: ['build', '-t', '${IMAGE1}', './Container1']
 
   # Push Container 1 image to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'northamerica-northeast1-docker.pkg.dev/csci5409-428822/csci5409k8app1/k8img1']
+    args: ['push', '${IMAGE1}']
   
   # Build Container 2 image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'northamerica-northeast1-docker.pkg.dev/csci5409-428822/csci5409k8app2/k8img2', './Container2']
+    args: ['build', '-t', '${IMAGE2}', './Container2']
   
   # Push Container 2 image to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'northamerica-northeast1-docker.pkg.dev/csci5409-428822/csci5409k8app2/k8img2']
+    args: ['push', '${IMAGE2}']
 
     # Fetch Kubernetes cluster credentials
   - name: 'gcr.io/cloud-builders/gcloud'
@@ -21,11 +34,11 @@ steps:
       - 'container'
       - 'clusters'
       - 'get-credentials'
-      - 'csci5409-k8-assignment-cluster'
-      - '--region=us-east1-c'
+      - '${GKE_CLUSTER_NAME}'
+      - '--region=${REGION}'
     env:
-      - 'CLOUDSDK_CONTAINER_CLUSTER=csci5409-k8-assignment-cluster'
-      - 'CLOUDSDK_COMPUTE_REGION=us-east1-c'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=${GKE_CLUSTER_NAME}'
+      - 'CLOUDSDK_COMPUTE_REGION=${REGION}'
 
   # Deploy pv and pvc to Kubernetes cluster
   - name: 'gcr.io/cloud-builders/kubectl'
@@ -34,8 +47,8 @@ steps:
       - '-f'
       - 'deployment.yaml'
     env:
-      - 'CLOUDSDK_CONTAINER_CLUSTER=csci5409-k8-assignment-cluster'
-      - 'CLOUDSDK_COMPUTE_REGION=us-east1-c'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=${GKE_CLUSTER_NAME}'
+      - 'CLOUDSDK_COMPUTE_REGION=${REGION}'
 
   # Deploy container 1 and corresponding service
   - name: 'gcr.io/cloud-builders/kubectl'
@@ -44,8 +57,8 @@ steps:
       - '-f'
       - './Container1/container1-deployment.yaml' 
     env:
-      - 'CLOUDSDK_CONTAINER_CLUSTER=csci5409-k8-assignment-cluster'
-      - 'CLOUDSDK_COMPUTE_REGION=us-east1-c'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=${GKE_CLUSTER_NAME}'
+      - 'CLOUDSDK_COMPUTE_REGION=${REGION}'
     
     # Deploy container 2 and corresponding service
   - name: 'gcr.io/cloud-builders/kubectl'
@@ -54,8 +67,8 @@ steps:
       - '-f'
       - './Container2/container2-deployment.yaml' 
     env:
-      - 'CLOUDSDK_CONTAINER_CLUSTER=csci5409-k8-assignment-cluster'
-      - 'CLOUDSDK_COMPUTE_REGION=us-east1-c'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=${GKE_CLUSTER_NAME}'
+      - 'CLOUDSDK_COMPUTE_REGION=${REGION}'
 
 options:
   default_logs_bucket_behavior: REGIONAL_USER_OWNED_BUCKET
