@@ -23,19 +23,13 @@ steps:
       - 'get-credentials'
       - 'csci5409-k8-assignment-cluster'
       - '--region=us-east1-c'
-    env:
-      - 'CLOUDSDK_CONTAINER_CLUSTER=csci5409-k8-assignment-cluster'
-      - 'CLOUDSDK_COMPUTE_REGION=us-east1-c'
-
+   
   # Deploy pv and pvc to Kubernetes cluster
   - name: 'gcr.io/cloud-builders/kubectl'
     args:
       - 'apply'
       - '-f'
       - 'deployment.yaml'
-    env:
-      - 'CLOUDSDK_CONTAINER_CLUSTER=csci5409-k8-assignment-cluster'
-      - 'CLOUDSDK_COMPUTE_REGION=us-east1-c'
 
   # Deploy container 1 and corresponding service
   - name: 'gcr.io/cloud-builders/kubectl'
@@ -43,9 +37,6 @@ steps:
       - 'apply'
       - '-f'
       - './Container1/container1-deployment.yaml' 
-    env:
-      - 'CLOUDSDK_CONTAINER_CLUSTER=csci5409-k8-assignment-cluster'
-      - 'CLOUDSDK_COMPUTE_REGION=us-east1-c'
     
     # Deploy container 2 and corresponding service
   - name: 'gcr.io/cloud-builders/kubectl'
@@ -53,10 +44,9 @@ steps:
       - 'apply'
       - '-f'
       - './Container2/container2-deployment.yaml' 
-    env:
+
+  env:
       - 'CLOUDSDK_CONTAINER_CLUSTER=csci5409-k8-assignment-cluster'
       - 'CLOUDSDK_COMPUTE_REGION=us-east1-c'
-
-
 options:
   default_logs_bucket_behavior: REGIONAL_USER_OWNED_BUCKET
