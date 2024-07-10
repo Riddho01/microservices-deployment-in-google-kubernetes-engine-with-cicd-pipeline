@@ -2,6 +2,8 @@ steps:
   # Build Container 1
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'northamerica-northeast1-docker.pkg.dev/csci5409-428822/csci5409k8app1/k8img1:$SHORT_SHA', './Container1']
+    env:
+      - 'SHORT_SHA=$SHORT_SHA'  # Export commit hash as environment variable
   
   # Push Container 1 image to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
@@ -10,6 +12,8 @@ steps:
   # Build Container 2
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'northamerica-northeast1-docker.pkg.dev/csci5409-428822/csci5409k8app2/k8img2:$SHORT_SHA', './Container2']
+    env:
+      - 'SHORT_SHA=$SHORT_SHA'  # Export commit hash as environment variable
   
   # Push Container 2 image to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
@@ -23,18 +27,6 @@ steps:
       - 'get-credentials'
       - 'csci5409-k8-assignment-cluster'
       - '--region=us-central1'
-  
-    # Fetch Kubernetes cluster credentials
-  - name: 'gcr.io/cloud-builders/gcloud'
-    args:
-      - 'container'
-      - 'clusters'
-      - 'get-credentials'
-      - 'csci5409-k8-assignment-cluster'
-      - '--region=us-central1'
-    env:
-      - 'CLOUDSDK_CONTAINER_CLUSTER=csci5409-k8-assignment-cluster'
-      - 'CLOUDSDK_COMPUTE_REGION=us-central1'
 
   # Deploy to Kubernetes cluster
   - name: 'gcr.io/cloud-builders/kubectl'
@@ -49,8 +41,6 @@ steps:
 images:
   - 'northamerica-northeast1-docker.pkg.dev/csci5409-428822/csci5409k8app1/k8img1:$SHORT_SHA'
   - 'northamerica-northeast1-docker.pkg.dev/csci5409-428822/csci5409k8app2/k8img2:$SHORT_SHA'
-
-
 
 options:
   default_logs_bucket_behavior: REGIONAL_USER_OWNED_BUCKET
